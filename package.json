@@ -1,0 +1,10 @@
+{
+  "name": "RFID",
+  "description": "",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "express": "^4.17.1",
+    "serialport": "^7.1.5"
+  }
+}
