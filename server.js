@@ -3,11 +3,11 @@ const express = require('express')
     , http = require('http').Server(app)
     , SerialPort = require('serialport')
     ;
-var port = new SerialPort("COM1", {
+const port = new SerialPort(process.env.COM, {
     baudRate: 4800,
     dataBits: 7
 });
-var lastvalue = {
+let lastvalue = {
     weight: 0
     , tare: 0
 }
@@ -19,17 +19,17 @@ app.use(function (req, res, next) {
 app.get('/', function (req, res) {
     res.send(JSON.stringify(lastvalue));
 });
-http.listen(8082, function () {
-    console.log('Server UP', 'PID ' + process.pid);
+http.listen(process.env.NODE_PORT, function () {
+    console.log('Server UP', 'PID ' + process.pid, 'Port', process.env.NODE_PORT);
 });
 function placeString(str, place, position) {
     return [str.slice(0, position), place, str.slice(position)].join('')
 }
-var x = 0;
-var str = '';
+let x = 0;
+let str = '';
 port.on('data', function (data) {
-    var original = data.toString('utf8').trim();
-    var aux = parseInt(original);
+    let original = data.toString('utf8').trim();
+    let aux = parseInt(original);
     if (Number.isInteger(aux)) {
         x++;
         str += '' + original;
